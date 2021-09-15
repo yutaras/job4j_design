@@ -1,5 +1,6 @@
 package ru.job4j.it;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -24,6 +25,16 @@ public class MatrixItTest {
         };
         MatrixIt it = new MatrixIt(in);
         assertThat(it.next(), is(1));
+    }
+
+    @Test
+    public void whenFirstEmptyThenNextThenHasNextIsFalse() {
+        int[][] in = {
+                {}, {1}
+        };
+        MatrixIt it = new MatrixIt(in);
+        assertThat(it.next(), is(1));
+        assertFalse(it.hasNext());
     }
 
     @Test
