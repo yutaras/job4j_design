@@ -55,4 +55,10 @@ public class EvenNumbersIteratorTest {
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(8));
     }
+
+    @Test
+    public void  shouldReturnFalseIfNoAnyNumbers() {
+        it = new EvenNumbersIterator(new int[]{});
+        assertThat(it.hasNext(), is(false));
+    }
 }

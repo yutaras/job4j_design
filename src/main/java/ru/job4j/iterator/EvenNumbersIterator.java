@@ -14,6 +14,9 @@ public class EvenNumbersIterator implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
+        if (data.length == 0) {
+            return false;
+        }
         if (data.length == 1 || index == data.length - 1) {
             return data[index] % 2 == 0;
         } else {
