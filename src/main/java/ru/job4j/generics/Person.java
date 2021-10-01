@@ -45,7 +45,4 @@ public class Person {
                 + ", birthday=" + birthday
                 + '}';
     }
-    // getters and setters
-    // equals and hashcode
-    // toString
 }
