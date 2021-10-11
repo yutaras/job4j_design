@@ -69,12 +69,10 @@ public class SimpleLinkedList<E> implements List<E> {
     private static class Node<E> {
         E element;
         Node<E> nextNode;
-        Node<E> prevNode;
 
         Node(Node<E> prevNode, E element, Node<E> nextNode) {
             this.element = element;
             this.nextNode = nextNode;
-            this.prevNode = prevNode;
         }
 
         public E getElement() {
