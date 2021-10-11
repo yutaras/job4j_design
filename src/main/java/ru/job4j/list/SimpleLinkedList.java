@@ -28,12 +28,12 @@ public class SimpleLinkedList<E> implements List<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-            Node<E> target = first;
-            for (int i = 0; i < index; i++) {
-                target = getNextElement(target);
-            }
-            return target.getElement();
+        Node<E> target = first;
+        for (int i = 0; i < index; i++) {
+            target = getNextElement(target);
         }
+        return target.getElement();
+    }
 
     private Node<E> getNextElement(Node<E> current) {
         return current.getNextNode();
@@ -42,13 +42,12 @@ public class SimpleLinkedList<E> implements List<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
-            int index = 0;
             final int expectedModCount = modCount;
             Node<E> current = first;
 
             @Override
             public boolean hasNext() {
-                return index < size;
+                return current != null;
             }
 
             @Override
@@ -61,7 +60,6 @@ public class SimpleLinkedList<E> implements List<E> {
                 } else {
                     E data = current.element;
                     current = current.nextNode;
-                    index++;
                     return data;
                 }
             }
