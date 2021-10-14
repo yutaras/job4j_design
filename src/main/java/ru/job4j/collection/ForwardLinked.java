@@ -20,10 +20,14 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     public T deleteFirst() {
-        iterator().next();
-        T l = head.value;
-        head = head.next;
-        return l;
+        if (head == null) {
+            throw new NoSuchElementException();
+        } else {
+            Node<T> l = head;
+            head = head.next;
+            l.next = null;
+            return l.value;
+        }
     }
 
     @Override
