@@ -13,9 +13,9 @@ public class ListUtilsTest {
 
     @Test
     public void whenAddBefore() {
-        List<Integer> input = new ArrayList<>(Arrays.asList(1, 3));
+        List<Integer> input = new ArrayList<>(Arrays.asList(1, 3, 4));
         ListUtils.addBefore(input, 1, 2);
-        assertThat(input, Is.is(Arrays.asList(1, 2, 3)));
+        assertThat(input, Is.is(Arrays.asList(1, 2, 3, 4)));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -26,9 +26,9 @@ public class ListUtilsTest {
 
     @Test
     public void whenAddAfterLast() {
-        List<Integer> input = new ArrayList<>(Arrays.asList(0, 1, 2));
+        List<Integer> input = new ArrayList<>(Arrays.asList(0, 1, 2, 4));
         ListUtils.addAfter(input, 2, 3);
-        assertThat(input, Is.is(Arrays.asList(0, 1, 2, 3)));
+        assertThat(input, Is.is(Arrays.asList(0, 1, 2, 3, 4)));
     }
 
     @Test
@@ -47,9 +47,9 @@ public class ListUtilsTest {
 
     @Test
     public void whenRemoveAll() {
-        List<Integer> list = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4));
+        List<Integer> list = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5));
         List<Integer> elements = new ArrayList<>(Arrays.asList(0, 1, 2, 4));
         ListUtils.removeAll(list, elements);
-        assertThat(list, Is.is(Arrays.asList(3)));
+        assertThat(list, Is.is(Arrays.asList(3, 5)));
     }
 }
