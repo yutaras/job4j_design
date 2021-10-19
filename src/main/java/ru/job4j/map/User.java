@@ -24,7 +24,6 @@ public class User {
         Map<User, Object> map = new HashMap<>();
         map.put(user1, new Object());
         map.put(user2, new Object());
-        //System.out.println(map);
         for (User key : map.keySet()) {
             Object value = map.get(key);
             System.out.println(key + " = " + value);
