@@ -19,15 +19,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if (count >= LOAD_FACTOR * capacity) {
-            expand();
-        }
         int index = (key == null) ? 0 : indexFor(hash(key.hashCode()));
         boolean rsl = table[index] == null;
         if (rsl) {
             table[index] = new MapEntry<>(key, value);
             count++;
             modCount++;
+        }
+        if (count > LOAD_FACTOR * capacity) {
+            expand();
         }
         return rsl;
     }
@@ -42,7 +42,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private void expand() {
         MapEntry<K, V>[] temp = table;
-        table  = new MapEntry[capacity * 2];
+        capacity = capacity * 2;
+        table = new MapEntry[capacity];
         for (MapEntry<K, V> map : temp) {
             if (map != null) {
                 this.put(map.key, map.value);

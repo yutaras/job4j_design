@@ -43,6 +43,7 @@ public class SimpleMapTest {
         map.put(9, "Алла");
         map.put(10, "Дмитрий");
         assertThat(map.get(1), is("Федя"));
+        assertThat(map.get(10), is("Дмитрий"));
     }
 
     @Test
