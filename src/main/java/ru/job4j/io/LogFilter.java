@@ -11,7 +11,7 @@ public class LogFilter {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 String[] s = line.split(" ");
                 if ("404".equals(s[s.length - 2])) {
-                    rsl.add(line);
+                    rsl.add(line + System.lineSeparator());
                 }
             }
         } catch (Exception e) {
