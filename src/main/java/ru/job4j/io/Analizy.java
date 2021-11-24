@@ -1,23 +1,14 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Analizy {
     public void unavailable(String source, String target) {
-        List<String> rst = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(source));
+             PrintWriter writer = new PrintWriter(new FileOutputStream(target))) {
+            byte serverDown = 0;
             while (in.ready()) {
                 String line = in.readLine();
-                rst.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (PrintWriter writer = new PrintWriter(new FileOutputStream(target))) {
-            byte serverDown = 0;
-            for (String line : rst) {
                 if (serverDown == 0 && (line.startsWith("400") || line.startsWith("500"))) {
                     writer.print(line.split(" ")[1] + ";");
                     serverDown = 1;
@@ -26,10 +17,10 @@ public class Analizy {
                     serverDown = 0;
                 }
             }
-        } catch (Exception e) {
+        } catch (
+                IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void main(String[] args) {
