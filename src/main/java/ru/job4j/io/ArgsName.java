@@ -16,6 +16,10 @@ public class ArgsName {
             throw new IllegalArgumentException("параметры не введены");
         }
         for (String arg : args) {
+            if (!arg.startsWith("-") || (!arg.contains("="))) {
+                throw new IllegalArgumentException("Параметры не соотвествуют шаблону -key=value");
+            }
+
             String[] split = arg.replaceFirst("-", "").split("=");
             if (split.length != 2) {
                 throw new IllegalArgumentException("Не введен один из параметров");
