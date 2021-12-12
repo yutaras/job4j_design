@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -34,12 +35,17 @@ public class Zip {
     }
 
     public static void main(String[] args) throws IOException {
-        Search.validation(args);
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Root folder is incorrect");
+        }
         ArgsName names = ArgsName.of(args);
         Path dir = Paths.get(names.get("d"));
+        if (!Files.exists(dir) || !Files.isDirectory(dir)) {
+            throw new IllegalArgumentException("The argument does not exist or is not a directory");
+        }
         String ex = names.get("e");
-        List<Path> list = Search.search(dir, p -> !p.toFile().getName().endsWith(ex));
         File out = new File(names.get("o"));
+        List<Path> list = Search.search(dir, p -> !p.toFile().getName().endsWith(ex));
         packFiles(list, out);
     }
 }
