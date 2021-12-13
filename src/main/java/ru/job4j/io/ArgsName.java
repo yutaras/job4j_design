@@ -8,6 +8,9 @@ public class ArgsName {
     private final Map<String, String> values = new HashMap<>();
 
     public String get(String key) {
+        if (values.get(key) == null) {
+            throw new IllegalArgumentException("данного ключа не существует");
+        }
         return values.get(key);
     }
 
