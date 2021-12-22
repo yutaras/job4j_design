@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class ConsoleChat {
 
@@ -13,7 +14,6 @@ public class ConsoleChat {
     private static final String OUT = "закончить";
     private static final String STOP = "стоп";
     private static final String CONTINUE = "продолжить";
-    List<String> listOfPhrases = new ArrayList<>();
 
     public ConsoleChat(String path, String botAnswers) {
         this.path = path;
@@ -21,13 +21,13 @@ public class ConsoleChat {
     }
 
     public void run() {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             List<String> log = new ArrayList<>();
+            Scanner input = new Scanner(System.in);
             boolean flag = true;
             String line = null;
             Random rand = new Random();
             while (!(OUT).equals(line)) {
-                line = reader.readLine();
+                line = input.nextLine();
                 log.add(line);
                 if ((STOP).equals(line)) {
                     flag = false;
@@ -42,13 +42,10 @@ public class ConsoleChat {
                 }
             }
             saveLog(log);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     private List<String> readPhrases() {
+        List<String> listOfPhrases = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(this.botAnswers))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 listOfPhrases.add(line);
