@@ -1,11 +1,14 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CSVReader {
+    public static List<String> log = new ArrayList<>();
+
     public static void handle(ArgsName argsName) {
-        try (BufferedReader in = new BufferedReader(new FileReader(argsName.get("path")));
-             PrintWriter writer = new PrintWriter(new FileOutputStream(argsName.get("out")))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(argsName.get("path")))) {
             String[] valueOfFilter = argsName.get("filter").split(",");
             String line = in.readLine();
             int[] arrayOfNumber = new int[valueOfFilter.length];
@@ -17,34 +20,32 @@ public class CSVReader {
                     }
                 }
             }
-            if ("stdout".equals(argsName.get("out"))) {
+            for (int i = 0; i < arrayOfNumber.length - 1; i++) {
+                log.add(line.split(";")[arrayOfNumber[i]] + ";");
+            }
+            log.add(line.split(";")[arrayOfNumber[arrayOfNumber.length - 1]] + System.lineSeparator());
+            while (in.ready()) {
+                String string = in.readLine();
                 for (int i = 0; i < arrayOfNumber.length - 1; i++) {
-                    System.out.print(line.split(";")[arrayOfNumber[i]] + ";");
+                    log.add(string.split(";")[arrayOfNumber[i]] + ";");
                 }
-                System.out.println(line.split(";")[arrayOfNumber[arrayOfNumber.length - 1]]);
-                while (in.ready()) {
-                    String string = in.readLine();
-                    for (int i = 0; i < arrayOfNumber.length - 1; i++) {
-                        System.out.print(string.split(";")[arrayOfNumber[i]] + ";");
-                    }
-                    System.out.println(string.split(";")[arrayOfNumber[arrayOfNumber.length - 1]]);
-                }
-            } else {
-                for (int i = 0; i < arrayOfNumber.length - 1; i++) {
-                    writer.print(line.split(";")[arrayOfNumber[i]] + ";");
-                }
-                writer.println(line.split(";")[arrayOfNumber[arrayOfNumber.length - 1]]);
-                while (in.ready()) {
-                    String string = in.readLine();
-                    for (int i = 0; i < arrayOfNumber.length - 1; i++) {
-                        writer.print(string.split(";")[arrayOfNumber[i]] + ";");
-                    }
-                    writer.println(string.split(";")[arrayOfNumber[arrayOfNumber.length - 1]]);
-                }
+                log.add(string.split(";")[arrayOfNumber[arrayOfNumber.length - 1]] + System.lineSeparator());
             }
         } catch (
                 IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void writeOut(ArgsName argsName, List<String> log) {
+        if ("stdout".equals(argsName.get("out"))) {
+            System.out.println(log);
+        } else {
+            try (PrintWriter pw = new PrintWriter(new FileWriter(argsName.get("out"), true))) {
+                log.forEach(pw::println);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -58,5 +59,6 @@ public class CSVReader {
             throw new IllegalArgumentException("The argument \"path\"does not exist or is not a directory");
         }
         handle(argsName);
+        writeOut(argsName, log);
     }
 }
