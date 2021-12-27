@@ -35,11 +35,10 @@ public class CSVReader {
                 IOException e) {
             e.printStackTrace();
         }
-        CSVReader csvReader = new CSVReader();
-        csvReader.writeOut(argsName, log);
+        writeOut(argsName, log);
     }
 
-    public void writeOut(ArgsName argsName, List<String> log) {
+    private static void writeOut(ArgsName argsName, List<String> log) {
         if ("stdout".equals(argsName.get("out"))) {
             for (String line : log) {
                 System.out.print(line);
