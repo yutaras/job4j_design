@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CSVReader {
-    public static List<String> log = new ArrayList<>();
 
     public static void handle(ArgsName argsName) {
+        List<String> log = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(argsName.get("path")))) {
             String[] valueOfFilter = argsName.get("filter").split(",");
             String line = in.readLine();
@@ -35,14 +35,18 @@ public class CSVReader {
                 IOException e) {
             e.printStackTrace();
         }
+        CSVReader csvReader = new CSVReader();
+        csvReader.writeOut(argsName, log);
     }
 
-    public static void writeOut(ArgsName argsName, List<String> log) {
+    public void writeOut(ArgsName argsName, List<String> log) {
         if ("stdout".equals(argsName.get("out"))) {
-            System.out.println(log);
+            for (String line : log) {
+                System.out.print(line);
+            }
         } else {
             try (PrintWriter pw = new PrintWriter(new FileWriter(argsName.get("out"), true))) {
-                log.forEach(pw::println);
+                log.forEach(pw::print);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -59,6 +63,5 @@ public class CSVReader {
             throw new IllegalArgumentException("The argument \"path\"does not exist or is not a directory");
         }
         handle(argsName);
-        writeOut(argsName, log);
     }
 }
