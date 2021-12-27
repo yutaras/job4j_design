@@ -17,16 +17,30 @@ public class CSVReader {
                     }
                 }
             }
-            for (int i = 0; i < arrayOfNumber.length - 1; i++) {
-                writer.print(line.split(";")[arrayOfNumber[i]] + ";");
-            }
-            writer.println(line.split(";")[arrayOfNumber.length - 1]);
-            while (in.ready()) {
-                String string = in.readLine();
+            if ("stdout".equals(argsName.get("out"))) {
                 for (int i = 0; i < arrayOfNumber.length - 1; i++) {
-                    writer.print(string.split(";")[arrayOfNumber[i]] + ";");
+                    System.out.print(line.split(";")[arrayOfNumber[i]] + ";");
                 }
-                writer.println(string.split(";")[arrayOfNumber.length - 1]);
+                System.out.println(line.split(";")[arrayOfNumber[arrayOfNumber.length - 1]]);
+                while (in.ready()) {
+                    String string = in.readLine();
+                    for (int i = 0; i < arrayOfNumber.length - 1; i++) {
+                        System.out.print(string.split(";")[arrayOfNumber[i]] + ";");
+                    }
+                    System.out.println(string.split(";")[arrayOfNumber[arrayOfNumber.length - 1]]);
+                }
+            } else {
+                for (int i = 0; i < arrayOfNumber.length - 1; i++) {
+                    writer.print(line.split(";")[arrayOfNumber[i]] + ";");
+                }
+                writer.println(line.split(";")[arrayOfNumber[arrayOfNumber.length - 1]]);
+                while (in.ready()) {
+                    String string = in.readLine();
+                    for (int i = 0; i < arrayOfNumber.length - 1; i++) {
+                        writer.print(string.split(";")[arrayOfNumber[i]] + ";");
+                    }
+                    writer.println(string.split(";")[arrayOfNumber[arrayOfNumber.length - 1]]);
+                }
             }
         } catch (
                 IOException e) {
@@ -39,6 +53,10 @@ public class CSVReader {
             throw new IllegalArgumentException("Root folder is incorrect");
         }
         ArgsName argsName = ArgsName.of(args);
+        File f = new File(argsName.get("path"));
+        if (!f.exists() || !f.isFile()) {
+            throw new IllegalArgumentException("The argument \"path\"does not exist or is not a directory");
+        }
         handle(argsName);
     }
 }
