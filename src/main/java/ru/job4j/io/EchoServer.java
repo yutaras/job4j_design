@@ -7,7 +7,7 @@ import java.net.Socket;
 public class EchoServer {
     public static void main(String[] args) throws IOException {
         try (ServerSocket server = new ServerSocket(9000)) {
-            while (true) {
+            while (!server.isClosed()) {
                 Socket socket = server.accept();
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
@@ -23,7 +23,12 @@ public class EchoServer {
                             s = "Hello";
                         }
                     }
-                    out.write(s.getBytes());
+                    if (server.isClosed()) {
+                        out.write("HTTP/1.1 400 OK\r\n\r\n".getBytes());
+                    } else {
+                        out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                        out.write(s.getBytes());
+                    }
                     out.flush();
                 }
             }
