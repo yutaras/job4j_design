@@ -17,7 +17,7 @@ public class EchoServer {
                     while (in.ready()) {
                         String str = in.readLine();
                         if (str.contains("Exit")) {
-                             s = "Exit";
+                            s = "Exit";
                             server.close();
                         } else if (str.contains("Hello")) {
                             s = "Hello";
