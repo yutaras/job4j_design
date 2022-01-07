@@ -7,6 +7,10 @@ public class Number {
         this.number = number;
     }
 
+    public String isNumber() {
+        return number;
+    }
+
     @Override
     public String toString() {
         return "Number{"
