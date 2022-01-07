@@ -9,6 +9,7 @@ public class Car {
     private final String name;
     private final String[] statuses;
 
+
     public Car(boolean truck, int power, Number number, String name, String[] statuses) {
         this.truck = truck;
         this.power = power;
