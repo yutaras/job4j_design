@@ -1,0 +1,13 @@
+insert into role(name) values ('programm');
+insert into users(name, role_id) values ('Ivan', 1);
+insert into rules(name) values ('admin');
+insert into roles_rules(role_id, rule_id) values (1, 1);
+insert into category(name) values ('private');
+insert into state(name) values ('OK');
+insert into item(name, user_id, category_id, state_id) values ('Item1', 1, 1, 1);
+insert into comments(name, item_id) values ('comments1', 1);
+insert into attachs (name, item_id) values ('attachs1', 1);
+
+
+
+
