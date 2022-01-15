@@ -1,0 +1,10 @@
+create table meaning(
+    id serial primary key,
+    meaning text,
+);
+
+create table dictionary(
+    id serial primary key,
+    word text,
+    meaning_id int references meaning(id) unique
+);
