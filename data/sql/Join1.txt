@@ -1,0 +1,35 @@
+create table bus(
+    id serial primary key,
+    name varchar(255)
+);
+
+create table driver(
+    id serial primary key,
+    name varchar(255),
+    bus_id int references bus(id)
+);
+
+insert into bus(name) values ('MAN');
+insert into bus(name) values ('VOLVO');
+insert into bus(name) values ('KAMAZ');
+
+insert into driver(name, bus_id) VALUES ('Ivan', 1);
+insert into driver(name, bus_id) VALUES ('Dmitriy', 1);
+insert into driver(name, bus_id) VALUES ('Nilokay', 2);
+insert into driver(name, bus_id) VALUES ('Artem', 3);
+insert into driver(name, bus_id) VALUES ('Maxim');
+
+
+select * from driver 
+join bus b
+on driver.bus_id = b.id;
+
+select d.name, b.name
+from driver as d 
+join bus as b 
+on d.bus_id = b.id;
+
+select d.name as Водитель, b.name as Марка_автобуса
+from driver as d 
+join bus as b 
+on d.bus_id = b.id;
