@@ -1,0 +1,62 @@
+create table type(
+    id serial primary key,
+    name varchar(255)
+);
+
+create table product(
+    id serial primary key,
+    name varchar(255),
+	type_id int references type(id),
+	expired_date date,
+	price int
+);
+
+insert into type(name) values ('МОЛОЧНЫЕ'), ('ФРУКТЫ'), ('ОВОЩИ'), ('МЯСО'), ('РЫБА'), ('ВОДА'), ('СЫР'), ('МОРОЖЕНОЕ');
+insert into product(name, type_id, expired_date, price ) values ('Кефир', 1, '2022-02-01', 65), ('Творог', 1, '2022-01-30', 50);
+insert into product(name, type_id, expired_date, price ) values ('Яблоко', 2, '2022-03-01', 80), ('Груша', 2, '2022-01-30', 120);
+insert into product(name, type_id, expired_date, price ) values ('Морковь', 3, '2022-4-25', 20), ('Капуста', 3, '2022-04-01', 30);
+insert into product(name, type_id, expired_date, price ) values ('Свинина', 4, '2022-02-25', 265), ('Говядина', 4, '2022-03-28', 440);
+insert into product(name, type_id, expired_date, price ) values ('Семга', 5, '2022-05-25', 700), ('Треска', 5, '2022-03-28', 400);
+insert into product(name, type_id, expired_date, price ) values ('Сок', 6, '2022-08-25', 80), ('Вода', 6, '2022-07-21', 50);
+insert into product(name, type_id, expired_date, price ) values ('Сыр Голландский', 7, '2022-05-20', 430), ('Сыр Моцарелла', 7, '2022-01-21', 650);
+insert into product(name, type_id, expired_date, price ) values ('Мороженое Лакомка', 8, '2022-06-01', 45), ('Мороженое Магнат', 8, '2022-04-30', 99);
+
+select p.name
+from product as p
+join type as t
+on t.id= p.type_id
+where t.name = 'СЫР';
+
+select * from product where name like '%Мороженое%';
+
+select * from product where current_date > expired_date;
+
+SELECT * FROM product
+WHERE price = (SELECT MAX(price) FROM product);
+
+select t.name, count(p.type_id) 
+from product as p
+join type as t
+on t.id= p.type_id
+group by t.name;
+
+select p.name
+from product as p
+join type as t
+on t.id= p.type_id
+where t.name = 'СЫР' or t.name = 'МОЛОЧНЫЕ';
+
+select t.name, count(p.type_id) 
+from product as p
+join type as t
+on t.id= p.type_id
+group by t.name
+having count(p.type_id) < 10;
+
+select p.name, t.name
+from product as p
+join type as t
+on t.id= p.type_id;
+
+
+
