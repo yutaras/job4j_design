@@ -1,0 +1,31 @@
+create table departments(
+    id serial primary key,
+    name varchar(255)
+);
+
+create table employees(
+    id serial primary key,
+    name varchar(255),
+    departments_id int references departments(id)
+);
+
+insert into departments(name) values ('полиция'),('пожарная'),('скорая'),('МЧС');
+
+insert into employees(name, departments_id) values ('Иван', 1);
+insert into employees(name, departments_id) values ('Саша', 2);
+insert into employees(name, departments_id) values ('Олег', 3);
+insert into employees(name, departments_id) values ('Николай', null);
+insert into employees(name, departments_id) values ('Клара', null);
+insert into employees(name, departments_id) values ('Оля', 1);
+
+select * from employees e left join departments d on e.departments_id = d.id;
+select * from departments d left join employees e on d.id = e.departments_id;
+select * from departments d right join employees e on d.id = e.departments_id;
+select * from employees e right join departments d on e.departments_id = d.id;
+select * from employees e full join departments d on e.departments_id = d.id;
+select * from employees e cross join departments d;
+
+select * from departments d left join employees e on d.id = e.departments_id where e.id is null;
+
+select * from employees e left join departments d on e.departments_id = d.id;
+select e.id, e.name, e.departments_id, d.id, d.name from departments d right join employees e on d.id = e.departments_id;
