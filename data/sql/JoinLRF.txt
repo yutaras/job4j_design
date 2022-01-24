@@ -29,3 +29,6 @@ select * from departments d left join employees e on d.id = e.departments_id whe
 
 select * from employees e left join departments d on e.departments_id = d.id;
 select e.id, e.name, e.departments_id, d.id, d.name from departments d right join employees e on d.id = e.departments_id;
+
+select n1.name as a, n2.name as b, concat(n1.gender, n2.gender)
+as "marriage" from teens n1 cross join teens n2 where n1.gender != n2.gender;
