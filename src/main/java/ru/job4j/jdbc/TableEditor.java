@@ -34,11 +34,8 @@ public class TableEditor implements AutoCloseable {
     }
 
     public void createTable(String tableName) throws SQLException {
-        String sql = String.format(
-                "create table if not exists tableName(%s, %s);",
-                "id serial primary key",
-                "name text"
-        );
+        String sql = "CREATE TABLE if not exists tableName "
+                + "(id INTEGER PRIMARY KEY)";
         executeUpdate(sql);
     }
 
