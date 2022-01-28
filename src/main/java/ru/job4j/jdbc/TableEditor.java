@@ -1,7 +1,6 @@
 package ru.job4j.jdbc;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,7 +10,7 @@ import java.util.StringJoiner;
 
 public class TableEditor implements AutoCloseable {
 
-    private Connection connection;
+    private static Connection connection;
 
     private Properties properties;
 
@@ -29,20 +28,23 @@ public class TableEditor implements AutoCloseable {
     }
 
     private void executeUpdate(String query) throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(query);
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(query);
+        }
     }
 
     public void createTable(String tableName) throws SQLException {
-        String customerTableQuery = "CREATE TABLE customers "
-                + "(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)";
-        executeUpdate(customerTableQuery);
+        String sql = String.format(
+                "create table if not exists tableName(%s, %s);",
+                "id serial primary key",
+                "name text"
+        );
+        executeUpdate(sql);
     }
 
     public void dropTable(String tableName) throws SQLException {
-        String customerTableQuery = "DROP TABLE customers "
-                + "(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)";
-        executeUpdate(customerTableQuery);
+        String sql = "DROP TABLE tableName";
+        executeUpdate(sql);
     }
 
     public void addColumn(String tableName, String columnName, String type) {
@@ -81,9 +83,14 @@ public class TableEditor implements AutoCloseable {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
-        FileInputStream in = new FileInputStream("app.properties");
-        properties.load(in);
+        try (FileInputStream in = new FileInputStream("app.properties")) {
+            properties.load(in);
+        }
+        try (TableEditor tableEditor = new TableEditor(properties)) {
+            tableEditor.createTable("demo");
+            System.out.println(getTableScheme(connection, "demo"));
+        }
     }
 }
