@@ -22,15 +22,21 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            /* rd.lines().forEach(...); */
-            while (rd.ready()) {
+            rd.lines().forEach(line -> {
+                String[] elements = line.split(";", 2);
+                if (elements.length != 2 || elements[0].isEmpty() || elements[1].isEmpty()) {
+                    throw new IllegalArgumentException("Аргументы пустые или их колиство не равно 2");
+                }
+                users.add(new User(elements[0], elements[1]));
+            });
+            /*while (rd.ready()) {
                 String line = rd.readLine();
                 String[] elements = line.split(";");
                 if (elements.length != 2 || elements[0].isEmpty() || elements[1].isEmpty()) {
                     throw new IllegalArgumentException("Аргументы пустые или их колиство не равно 2");
                 }
                 users.add(new User(elements[0], elements[1]));
-            }
+            }*/
         }
         return users;
     }
