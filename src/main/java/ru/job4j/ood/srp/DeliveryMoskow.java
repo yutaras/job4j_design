@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Класс представляет собой реализацию интерфейса Доставка в Москве.
+ * Реализация имеет различный функционал, нарушается принцип SRP
  */
 class DeliveryMoscow implements Delivery {
     @Override
