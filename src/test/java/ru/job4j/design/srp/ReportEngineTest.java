@@ -70,4 +70,39 @@ public class ReportEngineTest {
                 .append(System.lineSeparator());
         assertThat(hr.generate(em -> true), is(expect.toString()));
     }
+
+    @Test
+    public void whenReportProgrammer() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker1 = new Employee("Ivan", now, now, 100);
+        Employee worker2 = new Employee("Max", now, now, 200);
+        store.add(worker1);
+        store.add(worker2);
+        Report programmer = new ReportProgrammer(store);
+        StringBuilder expect = new StringBuilder()
+                .append("<html>" + "<table>" + "<body>"
+                        + "<tr>"
+                        + "<th>Name</th>"
+                        + "<th>Hired</th>"
+                        + "<th>Fired</th>"
+                        + "<th>Salary</th>"
+                        + "</tr>").append(System.lineSeparator())
+                .append("<tr>")
+                .append("<td>").append(worker1.getName()).append("</td>")
+                .append("<td>").append(worker1.getHired()).append("</td>")
+                .append("<td>").append(worker1.getFired()).append("</td>")
+                .append("<td>").append(worker1.getSalary()).append("</td>")
+                .append("</tr>")
+                .append(System.lineSeparator())
+                .append("<tr>")
+                .append("<td>").append(worker2.getName()).append("</td>")
+                .append("<td>").append(worker2.getHired()).append("</td>")
+                .append("<td>").append(worker2.getFired()).append("</td>")
+                .append("<td>").append(worker2.getSalary()).append("</td>")
+                .append("</tr>")
+                .append(System.lineSeparator())
+                .append("</body>" + "</table>" + "</html>");
+        assertThat(programmer.generate(em -> true), is(expect.toString()));
+    }
 }
