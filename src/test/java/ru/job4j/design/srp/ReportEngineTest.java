@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static ru.job4j.design.srp.ReportAccountant.DOLLAR;
 
 public class ReportEngineTest {
 
@@ -40,7 +41,7 @@ public class ReportEngineTest {
                 .append(worker.getName()).append(";")
                 .append(worker.getHired()).append(";")
                 .append(worker.getFired()).append(";")
-                .append(worker.getSalary() / 83).append(";")
+                .append(worker.getSalary() / DOLLAR).append(";")
                 .append(System.lineSeparator());
         assertThat(accountant.generate(em -> true), is(expect.toString()));
     }

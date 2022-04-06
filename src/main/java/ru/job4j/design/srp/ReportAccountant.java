@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 public class ReportAccountant implements Report {
     private Store store;
 
-    private double dollar = 83;
+    public static final double DOLLAR = 83;
 
     public ReportAccountant(Store store) {
         this.store = store;
@@ -19,7 +19,7 @@ public class ReportAccountant implements Report {
             text.append(employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
                     .append(employee.getFired()).append(";")
-                    .append(employee.getSalary() / dollar).append(";")
+                    .append(employee.getSalary() / DOLLAR).append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();
