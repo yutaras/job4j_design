@@ -12,7 +12,7 @@ public class Shop implements Storage {
         boolean rsl = accept(food);
         if (rsl) {
             if (getPercent(food) > 75) {
-                food.setPrice(food.price - food.price * food.discount);
+                food.setPrice(food.getPrice() - food.getPrice() * food.getDiscount());
             }
 
             listS.add(food);

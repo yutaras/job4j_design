@@ -13,8 +13,8 @@ public interface Storage {
 
     default int getPercent(Food food) {
         LocalDate dateNow = LocalDate.now();
-        Period currentPeriod = Period.between(dateNow, food.createDate);
-        Period storageLife = Period.between(food.expiryDate, food.createDate);
+        Period currentPeriod = Period.between(dateNow, food.getCreateDate());
+        Period storageLife = Period.between(food.getExpiryDate(), food.getCreateDate());
         return currentPeriod.getDays() * 100 / storageLife.getDays();
     }
 }
