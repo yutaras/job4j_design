@@ -19,6 +19,8 @@ public class CurrentParkingTest {
         currentParking.add(passengerCar2);
         assertTrue(currentParking.add(truck));
     }
+
+    @Ignore
     @Test
     public void whenAddOnlyCarsTrue() {
         Parking currentParking = new CurrentParking(1, 1);
@@ -63,6 +65,5 @@ public class CurrentParkingTest {
         currentParking.add(truck1);
         assertFalse(currentParking.add(car2));
     }
-
 
 }
