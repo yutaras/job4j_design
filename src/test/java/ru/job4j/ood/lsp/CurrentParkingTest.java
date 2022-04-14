@@ -15,8 +15,8 @@ public class CurrentParkingTest {
         Vehicles passengerCar1 = new PassengerCar();
         Vehicles passengerCar2 = new PassengerCar();
         Vehicles truck = new Truck(2);
-        currentParking.add(passengerCar1);
-        currentParking.add(passengerCar2);
+        assertTrue(currentParking.add(passengerCar1));
+        assertTrue(currentParking.add(passengerCar2));
         assertTrue(currentParking.add(truck));
     }
 
@@ -27,15 +27,15 @@ public class CurrentParkingTest {
         Vehicles passengerCar1 = new PassengerCar();
         Vehicles passengerCar2 = new PassengerCar();
         Vehicles passengerCar3 = new PassengerCar();
-        currentParking.add(passengerCar1);
-        currentParking.add(passengerCar2);
+        assertTrue(currentParking.add(passengerCar1));
+        assertTrue(currentParking.add(passengerCar2));
         assertTrue(currentParking.add(passengerCar3));
     }
 
     @Ignore
     @Test
     public void whenTwoTrucksTrue() {
-        Parking currentParking = new CurrentParking(2, 1);
+        Parking currentParking = new CurrentParking(4, 1);
         Vehicles truck1 = new Truck(2);
         Vehicles truck2 = new Truck(4);
         assertTrue(currentParking.add(truck1));
