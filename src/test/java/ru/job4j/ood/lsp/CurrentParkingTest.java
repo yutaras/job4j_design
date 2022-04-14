@@ -23,7 +23,7 @@ public class CurrentParkingTest {
     @Ignore
     @Test
     public void whenAddOnlyCarsTrue() {
-        Parking currentParking = new CurrentParking(1, 1);
+        Parking currentParking = new CurrentParking(3, 0);
         Vehicles passengerCar1 = new PassengerCar();
         Vehicles passengerCar2 = new PassengerCar();
         Vehicles passengerCar3 = new PassengerCar();
