@@ -6,7 +6,7 @@ import java.util.List;
 public class CurrentParking implements Parking {
     private int placesPassengerCars;
     private int placesTrucks;
-    private List<Vehicles> vehicles = new ArrayList<>();
+    private List<Vehicles> vehiclesList = new ArrayList<>();
 
     public CurrentParking(int placesPassengerCars, int placesTrucks) {
         this.placesPassengerCars = placesPassengerCars;
@@ -15,11 +15,26 @@ public class CurrentParking implements Parking {
 
     @Override
 
-    public boolean add(Vehicles vehicles) {
-        return false;
+    public boolean add(Vehicles vehicle) {
+        boolean rsl = false;
+        if (vehicle.getSize() == PassengerCar.SIZE && placesPassengerCars >= 1) {
+            vehiclesList.add(vehicle);
+            placesPassengerCars--;
+            rsl = true;
+        } else if (vehicle.getSize() > PassengerCar.SIZE && placesTrucks >= 1) {
+            vehiclesList.add(vehicle);
+            placesTrucks--;
+            rsl = true;
+        } else if (vehicle.getSize() > PassengerCar.SIZE
+                && placesPassengerCars >= vehicle.getSize()) {
+            vehiclesList.add(vehicle);
+            placesPassengerCars -= vehicle.getSize();
+            rsl = true;
+        }
+        return rsl;
     }
 
     List<Vehicles> getVehicles() {
-        return null;
+        return List.copyOf(vehiclesList);
     }
 }
