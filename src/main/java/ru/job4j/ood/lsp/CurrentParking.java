@@ -3,6 +3,8 @@ package ru.job4j.ood.lsp;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.job4j.ood.lsp.PassengerCar.SIZE;
+
 public class CurrentParking implements Parking {
     private int placesPassengerCars;
     private int placesTrucks;
@@ -17,15 +19,15 @@ public class CurrentParking implements Parking {
 
     public boolean add(Vehicles vehicle) {
         boolean rsl = false;
-        if (vehicle.getSize() == PassengerCar.SIZE && placesPassengerCars >= 1) {
+        if (vehicle.getSize() == SIZE && placesPassengerCars >= SIZE) {
             vehiclesList.add(vehicle);
             placesPassengerCars--;
             rsl = true;
-        } else if (vehicle.getSize() > PassengerCar.SIZE && placesTrucks >= 1) {
+        } else if (vehicle.getSize() > SIZE && placesTrucks >= SIZE) {
             vehiclesList.add(vehicle);
             placesTrucks--;
             rsl = true;
-        } else if (vehicle.getSize() > PassengerCar.SIZE
+        } else if (vehicle.getSize() > SIZE
                 && placesPassengerCars >= vehicle.getSize()) {
             vehiclesList.add(vehicle);
             placesPassengerCars -= vehicle.getSize();
