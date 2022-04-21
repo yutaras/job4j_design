@@ -29,4 +29,9 @@ public class Shop implements Storage {
     public List<Food> getListSt() {
         return List.copyOf(listS);
     }
+
+    @Override
+    public void cleared() {
+        listS.clear();
+    }
 }

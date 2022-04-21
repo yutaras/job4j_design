@@ -25,4 +25,9 @@ public class Trash implements Storage {
     public List<Food> getListSt() {
         return List.copyOf(listT);
     }
+
+    @Override
+    public void cleared() {
+        listT.clear();
+    }
 }

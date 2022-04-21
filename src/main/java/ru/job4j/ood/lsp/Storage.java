@@ -17,4 +17,6 @@ public interface Storage {
         Period storageLife = Period.between(food.getExpiryDate(), food.getCreateDate());
         return currentPeriod.getDays() * 100 / storageLife.getDays();
     }
+
+    void cleared();
 }

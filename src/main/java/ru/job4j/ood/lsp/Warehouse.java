@@ -24,4 +24,9 @@ public class Warehouse implements Storage {
     public List<Food> getListSt() {
         return List.copyOf(listW);
     }
+
+    @Override
+    public void cleared() {
+        listW.clear();
+    }
 }
