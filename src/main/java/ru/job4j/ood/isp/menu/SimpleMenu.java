@@ -4,31 +4,30 @@ import java.util.*;
 
 public class SimpleMenu implements Menu {
 
+    public static final ActionDelegate STUB_ACTION = System.out::println;
+
     private final List<MenuItem> rootElements = new ArrayList<>();
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
         boolean rsl = false;
-        Optional<ItemInfo> itemInfo = findItem(parentName);
-        if (itemInfo.isEmpty()) {
+        if (parentName == ROOT) {
             rootElements.add(new SimpleMenuItem(childName, actionDelegate));
             rsl = true;
         } else {
-            itemInfo.get().menuItem.getChildren().add(new SimpleMenuItem(childName, actionDelegate));
-            rsl = true;
+            Optional<ItemInfo> parentInfo = findItem(parentName);
+            if (parentInfo.isPresent() && findItem(childName).isEmpty()) {
+                MenuItem childItem = new SimpleMenuItem(childName, actionDelegate);
+                parentInfo.get().menuItem.getChildren().add(childItem);
+                rsl = true;
+            }
         }
         return rsl;
     }
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        Optional<MenuItemInfo> rsl = Optional.empty();
-        Optional<ItemInfo> item = findItem(itemName);
-        if (item.isPresent()) {
-            MenuItemInfo menuItem = new MenuItemInfo(item.get().menuItem, item.get().number);
-            rsl = Optional.of(menuItem);
-        }
-        return rsl;
+        return findItem(itemName).map(item -> new MenuItemInfo(item.menuItem, item.number));
     }
 
     @Override
@@ -138,6 +137,17 @@ public class SimpleMenu implements Menu {
             this.menuItem = menuItem;
             this.number = number;
         }
+    }
+
+    public static void main(String[] args) {
+        MenuPrinter printer = new Printer();
+        Menu menu = new SimpleMenu();
+        menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
+        menu.add(Menu.ROOT, "Покормить собаку", STUB_ACTION);
+        menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION);
+        menu.add("Купить продукты", "Купить хлеб", STUB_ACTION);
+        menu.add("Купить продукты", "Купить молоко", STUB_ACTION);
+        printer.print(menu);
     }
 
 }
